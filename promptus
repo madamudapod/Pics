@@ -1,0 +1,348 @@
+# Martin Walsh's design discussions and problems: POD_ PROTOTYPE, Apr 8, 2025
+
+Martin's name is anonymized in the notes as [PERSON_NAME_0999], and in places as "Martin Walsh". I read the Gemini summary, details and next steps, and searched the transcript for his lines. I did not read the full transcript.
+
+## 1. "Coming Soon" screen (locked menu items)
+- **Discussion:** Robert first suggested a humorous blank page. Martin proposed a quick option: reuse the splash screen in grayscale, with "Coming Soon" and the titles (shop, objects, leaderboards) along the top. Robert wanted something more visually appealing, though he said any improvement over a plain background was welcome.
+- **Problem:** Martin's first improved designs were too monotone. He added color, and the yellow highlight was well received.
+- **Outcome:** Martin will make a more appealing "Coming Soon" message that matches the game's look and goes beyond grayscale with text.
+
+## 2. Tutorial UI: text box size and hand cursor
+- **Discussion:** Martin shared a mockup with minimum dimensions for text boxes and fonts, as a reference for implementation. The minimum box height is about 220 px, with a 50 px font. He pointed out that this was the mockup, and that the version in the build was implemented smaller.
+- **Problem:** Another participant said the tutorial text was too small. They suggested doubling the text box size and adding a hand cursor. The developer was wary of the hand cursor from past experience, and said the font size needed to go up.
+- **Martin's counterpoint:** Only about four words fit per row, so a much larger font would drop that to three. He said he thought it was big enough.
+- **Outcome:** Oliver will enlarge the tutorial text boxes.
+
+## 3. Pre-level dialog info panel
+- **Discussion:** Martin presented a new variant that day, with numerical data for each item. He said the panel needs to show what the progression actually is.
+- **Problem:** The team found it overwhelming. Adding more elements, such as a plane, would make "a very big mess". The discussion was whether to show numbers at all, or just a bigger and bigger composition of items.
+- **Outcome:** Use visual cues and icons instead of raw numbers. Martin will revise the panel.
+
+## 4. Info screen
+- **Problem:** Martin and another team member found the many numbers confusing. One person preferred the current iteration for its clarity.
+- **Outcome:** They agreed to revert to the previous, clearer iteration.
+
+## 5. Infographic
+- **Problem:** It had too many numbers and no visual hierarchy.
+- **Outcome:** One participant argued strongly for removing the numbers and showing multiple records and clues as images instead, and the team adopted this. Martin committed to a redesign that keeps left-to-right readability. He will remove the orange numbers if wanted, improving the look while keeping the same function.
+
+## Martin's action items
+1. Make a visually appealing "Coming Soon" message for locked menu items.
+2. Revise the pre-level info panel, replacing numbers with icons or visual cues.
+3. Redesign the infographic: no orange numbers, left-to-right readability, images instead of numbers.
+
+## Other problems in the same meeting (not Martin's)
+- **Critical bug:** pre-calculated damage ignores crits, which crashes the game. The team asked for a reproducible test level or video.
+- **Main menu:** the bottom bar is full of "Coming Soon" placeholders. A carousel-style menu was preferred over chat bubbles.
+- **Level design:** levels feel repetitive after about level 20, and item introduction felt too fast. A/B testing is needed. Levels after 100 are algorithm-generated, with a target of 10,000.
+- **Air strike:** changed to one per streak.
+- **Marcus's end-game VFX:** needs a UI camera and canvas fixes.
+- **Game manager "item sets" terminology:** it is confusing, so they need to avoid resetting editor settings.
+
+The other five files from your earlier request are already read. I can write those up in the same format if you want.
+
+
+
+
+
+
+#######################################################################
+
+I re-read the full transcript and checked the summary against it. Most of it holds, but a few points need correcting.
+
+**Corrections**
+
+- **Skeleton key colour:** nothing was decided. Marcus suggested a silver key with a skull. The PM suggested a green skull, "like zombie". Martin then said "or a green key", so the green key was Martin's echo, not the PM's idea. Martin said he could change it any time. The only firm outcome is that the PM loved the shape, which they called industrial rather than medieval.
+- **Level 2 block:** the summary had the cause backwards. The dev tried to remove the UI camera. Oliver was using it for tutorial highlights, so the dev has to put it back. The next build should be workable.
+- **Quest and pop-up boxes:**
+  - The PM said they weren't crazy about the current boxes and suggested reusing the pack icons robert disliked.
+  - Martin pushed back that the pop-ups are for something different.
+  - The coloured set (blue for 1, green for 2, purple for 3) is the newest version of the shop pop-up offer boxes, which carry a timer. The transcript garbles the second colour ("Dutch with two"), so don't treat it as a real colour.
+  - Martin said he would share them in the channel for robert. The PM had also floated sharing them.
+- **Martin's open priority question:** the PM asked when he could start the trophy road and said there was nothing in Linear for him beyond quests and achievements. Martin asked which task had priority. The PM deferred it to a chat the next morning.
+- **Oliver's tasks:** after Play Race he moves to quests and achievements. He built them before on another game, so he expects it to be quick. The trophy road follows, once the Play Race UI is done. He expects most of Play Race finished by end of day and an accessible version the next day.
+- **robert's availability:** the transcript says he was out and flying. It also says he and another person were stuck at a hospital, which is probably a transcription mix-up.
+- **Marcus's work:**
+  - The coin aspect-ratio issue is a future risk. The coin may not snap to the coin icon if the aspect ratio changes. It was fixed in an earlier game, so someone needs to find out how.
+  - The "blind" fix means the character no longer has a bag over its head.
+  - The card-pack reveal animations for cars are blocked until the shop is implemented. Marcus estimated they could start the following week.
+  - He wants to redo the liquid VFX after the pack animations, if time allows. If not, robert will buy an asset-store pack.
+
+**Confirmed as accurate**
+
+- The AI "black rays" images were fixed from yellowish to a vibrant light blue.
+- City assets get a label change only.
+- The infographic uses only the biggest coin pile.
+- Play Race art is complete, Oliver should use Martin's updated screens, and the lose screen is the win screen with a 50% black overlay done in code.
+- The item upgrade system is done but locked in main because robert doesn't want to include it. He pulls from the dev's branch, where it is enabled.
+- Cars will be redeemable only in the shop. The PM will add this to the spec.
+- Oliver will not build placeholder backend data and will wait for the real backend.
+- Marcus is out Friday.
+- Marketing starts once QA confirms the submission build (720 on Jenkins) and it has propagated to the app store. The PM will do the quick QA, ping the person handling submission and tag Ryan for user acquisition.
+
+I can add this to a doc, or turn the action items into Linear tickets or a Slack follow-up.
+
+
+######################################################################
+
+
+# POD: PROTOTYPE, Sept 1, 2025: recent design work and unresolved issues
+
+This was a short Labor Day meeting with about half the team out, including Oliver and the US and Turkish teams. Most people in the notes are partly anonymized, so I've used role labels where a name is masked.
+
+## Recent design work
+
+**Item-effect screens (Martin, the art/UI designer)**
+- Screens now exist for freeze, burn, poison, shock, stun and confuse. The zombie heads are similar in size and composition but have different expressions.
+- Three more images are still needed, for multi-shot, splash and ricochet.
+- The AI image tool kept generating gore for the splash and ricochet concept, which was three zombie heads with things bouncing between them. The design team (a Turkish-team member, name masked) said the AI "always just like kind of puts the scissors onto the head."
+- The workaround is to generate the elements separately and have Martin compose the final images himself.
+- Martin's proposal is a static illustration with a simple looping animation behind it. For example, an ice cream flies in from the left, hits the zombie, and repeats until the player presses OK. He wants this on all the effect screens, not just ricochet.
+
+**Monster performance and design (Marcus Bennett, a Unity dev, and the design team)**
+- Marcus has changed the monster animator. He disabled unnecessary updates and fixed animations for some monsters, and he is restoring death-animation bones across the rest. Four monsters remain, and he planned to finish and push them that day.
+- Pooling makes spawning cheap now.
+- Monsters outside the camera view no longer calculate animation.
+- Design guidance from the discussion:
+  - Fewer, more deliberate encounters are fine. Leonard's view is that a mix of 20 monsters is "just matching matching matching very fast", with little strategy.
+  - Many low-health monsters are better than a few high-health ones. They die sooner, so fewer are on screen at once.
+  - A rough target is 20–30 monsters at a time, depending on the device. The person with the low-spec test devices should confirm.
+
+**Other work in progress**
+- **Season pass:** the claiming bug is almost fixed.
+- **Boss arena endpoints:** finished, but not yet deployed.
+- **Vision bot:** being changed to load a JSON instruction file from the editor.
+- **Reward animations:** Calvin built the skip animation for the endless end screen. He is finishing the end-level reward animation for the main menu.
+- **Website (Harmony engine):** it now supports admin scopes, Google and email login (including a demo account), player inspection and search, a live-event calendar, and a recent-builds view. It is expected to go live by the end of the week. Dominated Lights comes first, then Zombie Match.
+
+## Unresolved issues
+
+1. **Item effects vs. fewer monsters.** The design team says ricochet and splash are "rendered useless" without groups of zombies, and the HP has already been raised a lot. The answer was to keep clusters small and use low-HP monsters. Nobody confirmed that this keeps those items useful, and the monster count still needs checking against the device limits.
+2. **Performance is only partly fixed.** Pooling helps spawning only. A screen full of live monsters is still heavy, because the visibility culling only helps for monsters off camera. Marcus mentioned another optimization Oliver suggested earlier, which "takes much more" effort and hasn't been scheduled. Leonard also mentioned reducing level meshes as a further lever.
+3. **Looping animation approach.** Leonard said the effect screens are static for now and was wary of GIF support and added cost. Marcus said Unity can loop animations without GIFs. Martin's static image plus a simple loop sits between the two. It was left for Martin and Marcus to settle the next morning, with no decision recorded.
+4. **Splash, ricochet and multi-shot art** is still not finished. It depends on Martin's manual composition.
+5. **Reward animation triggers.** Calvin doesn't know when each reward should play. Leonard said rewards from chests should be shown. Calvin will follow that for now and expects more iteration. The reference document wasn't in the ticket, and nobody knew where it was. Calvin was told to ask the person who is out.
+6. **Backend blockers.**
+   - The AWS deployment of the boss arena endpoints is failing, with Docker image problems.
+   - The season pass claiming bug is still open.
+   - The backend dev's priorities are the season pass fix, then the boss arena deployment, then Owen's endpoints, which is why Owen is blocked.
+   - Owen will build fake data to test the flow for now.
+7. **Website write access.** Configuring live events and shop offers, and giving gems or rewards to players, needs write access through the backend endpoints. Leonard says this is where the backend is still blocking them.
+8. **Marcus's marketing video** is deprioritized. Leonard told him to focus on missing animations and on helping Oliver with the season pass.
+9. **Testing is delayed.** Oliver, who would test the animator build, was absent, so testing waits until the next day.
+
+## May 13 items
+
+None of the May 13 topics came up on Sept 1. These were the skeleton key colour, the shop and car-redemption spec, the trophy road, quests and achievements, the item-upgrade lock, the UI camera revert, and build 720 and marketing. The notes don't say whether any of them were resolved, so I can't mark them closed or open. The effect-screen work is new since May 13.
+
+## Notes on the notes
+
+Gemini's summary says Marcus "confirmed four more monsters," which matches the transcript. Several names are masked inconsistently, so a few attributions rest on context. Examples are the person who reports on Marcus's animator work and the person who generated the splash and ricochet images.
+
+
+
+#######################################################################
+
+**The "-commen.html" file has no challenges in it.** It's a Drive comments export with three entries:
+- Martin Walsh, Mar 5, 2024: a suggested edit adding "++++".
+- A "Rejected suggestion" on that edit, also Mar 5, 2024.
+- Martin Walsh, Sep 26, 2023: a comment with no visible text.
+
+The substance is in the companion docs, "Request to implement FIgma files into Unity.docx" and "Figma Converter for Unity.docx". The challenges below come from those. I couldn't read the screenshots in either doc.
+
+## Challenges documented in the docs
+
+1. **Imported layer order and hierarchy don't match Figma.** Some elements arrive in a different order and on different layers. Someone has to fix them by hand in the Unity Editor, which the converter doc calls "very time consuming."
+   - The proposed fix is to group related elements in Figma so they import as children of one group.
+
+2. **Imported objects are hard to identify.** The request doc asks for descriptions on containers and elements so you can tell what you're looking at after import. It says the layers and elements came out "messy" and promises an example, but that example is in a screenshot I couldn't read.
+
+3. **The designs need a clean source file.** The requester had to create a new design file and paste in only the "UI FINAL ALPHA Screens". Those screens can sit on one page, and the file's URL has to be shared.
+
+4. **The importer depends on a naming and tag convention.**
+   - **Format:** component names follow "tag - name - info", with "-" or "/" as the required separator. Examples: `btn - menu open - black silver`, `bg - circle pattern - used in frame 1, 2, 3`, `img - avatar - main user`.
+   - **`img` tag:** this goes on a parent object so it and its children import as one flattened image. The doc's example is `img-BombTile icn boosters`.
+   - **`btn` tag:** it must be at the start of the name, or the button script isn't added on import. The doc's example renames "Pop Up_btn info" to "btn-Pop Up info".
+   - **Maintenance:** the doc says the tag set "can be discussed", so it isn't final. Every designer has to follow it consistently for it to work.
+
+5. **Composition-only art gets imported.** The final concept art contains elements that exist only for composition. The tool imports them even though they shouldn't appear on screen.
+   - The request is a separate screen that follows the conventions above and contains only the polished, import-ready version.
+   - This means keeping a second version of each screen in sync with the design.
+
+## Who raised what
+
+- **Calvin Price** owns the request doc, so he is probably the requester. This is inferred.
+- **Marcus Bennett** owns the converter folders, so he is probably the author of the converter doc. This is inferred, and the doc names no author.
+- **Martin Walsh** is the only named person in the comments file. His only recorded input is the rejected "++++" edit and the blank comment.
+
+## General Figma-to-Unity issues (not from the files)
+
+These are common problems with this kind of pipeline. Nothing in the files mentions them, so check whether they apply to you.
+- **Scaling:** Figma frames are fixed-size, so you need to decide on anchors and canvas scaling for different screen ratios.
+- **Fonts:** fonts have to be present and converted for Unity.
+- **Effects:** Figma-only effects (blurs, shadows, blend modes) may not import faithfully.
+- **Draw calls:** many separate images can hurt performance, so sprite atlasing matters.
+- **Re-imports:** re-importing after a design change can overwrite manual fixes in Unity.
+
+
+#######################################################################
+
+
+**Game Designer – JD.docx** (Harmony Games, for the "Game of Dominoes" project)
+
+The file is short and has real text. The role is junior and mentored, but the required-skills list asks for senior-level expertise, and the two don't match (see the end).
+
+## Actual responsibilities
+The role reports to the Lead Game Designer. The document says it is meant to "help the design of our first game, Game of Dominoes." Almost every bullet is framed as assisting, supporting or learning.
+
+- **Mechanics:** Assist in the creative process and contribute to designing engaging game mechanics, guided by an experienced lead designer.
+- **Design drafts:** Turn ideas into initial design drafts, including documentation and basic visuals, with support from senior team members.
+- **Balancing:** Help balance player progression and difficulty in mobile puzzle games. There may be chances to work on match-3 or connect-tile experiences.
+- **Level design:** Support level design by contributing to technical specifications, engagement strategies and content development.
+- **Mini-games, challenges and quests:** Take part in designing these for Game of Dominoes, under the lead designer's supervision.
+- **UI and characters:** Contribute to UI design improvements and support character design efforts.
+- **Collaboration:** Work with engineers and the Chief Experience Officer on meeting design objectives. Work within cross-disciplinary teams, learning from more experienced designers.
+- **KPIs and testing:** Assist in evaluating KPIs, user testing and feedback, to learn how design decisions are informed and adjusted.
+- **Data analysis:** Analyse data under senior mentorship, to learn how to address and resolve KPI issues.
+
+## Technical expectations
+The file lists no engines, tools or software, such as Unity, Figma, Excel or SQL. There is no mention of scripting or programming either. The expectations are domain skills, listed under "Required Skills & Knowledge":
+
+- **Experience:** 2+ years of proven experience as a game designer.
+- **Features:** Experience creating and owning features for a casual mobile free-to-play audience.
+- **Monetization:** "Expert" knowledge of virtual goods and game monetization concepts.
+- **Documentation:** "Expert" specs, wireframes, flows and feature documentation for a live game.
+- **Systems and tuning:** "Expert" systems design and game tuning for free-to-play games.
+- **Economy:** "Expert" economic modeling and balance skills.
+- **Market:** "Expert" knowledge of the free-to-play market and its past and current trends.
+
+**Working style and soft skills:**
+- Ability to work as part of a large, fast-paced team in sprints.
+- A proactive, autonomous approach.
+- Outstanding written and verbal communication skills.
+
+A resume is required to apply.
+
+## Inconsistencies in the document
+- **Responsibilities vs. requirements:** The responsibilities describe a junior or associate role (assisting, learning, supervised, mentored). The requirements ask for 2+ years of experience and "expert" level in five areas. Someone would need to confirm which level is actually intended.
+- **Team size:** The studio intro describes a "compact, seasoned" team. The skills list asks for someone who can work in a "large, fast-paced team."
+- **Typos and leftovers:** "looking for a game designed" should read "game designer." "communications kills" should read "skills." The company name appears as a placeholder, "[SOURCE_ORG_0451]."
+
+
+
+#######################################################################
+
+
+# Additional prototype design discussions: POD: PROTOTYPE notes, Oct 7, 2025
+
+Names in these notes are anonymized, and the Gemini summary and the transcript sometimes disagree. I've flagged the places where that matters. The meeting was mostly bug triage, so the design material sits inside the bug and polish discussion.
+
+## Context
+- The team is about two days from submission.
+- Cards, currencies and boosters are synced. Avatars and name are still to do.
+- Google login now works. The earlier failure was probably a misconfiguration.
+
+## 1. Win-screen and premature level-ending logic
+- **Problem:** Levels sometimes end early, most often in level 12. The war/chef zombie is set to spawn at 35s, but the level ended at about 32.5s.
+- **Pattern:** It seems to happen at the handoff between tracks, not within a track. It happens more at 4x/6x simulation speed and with fast tapping or bots.
+- **Kill cam:**
+  - The kill cam never triggers during premature endings, so it was suggested as a validation check rather than a direct trigger.
+  - A caveat was raised that DOT effects can break the kill cam.
+  - The estimate was that the check might cut the issue by about 70%.
+- **Win-screen triggers:** The win screen fires from only two places. One is the kill cam. The other is a LateUpdate check that the live monster count is zero, added as a secondary condition for DOT issues.
+- **Options discussed:**
+  - Remove the secondary condition.
+  - Add a short delay. This was first questioned as an awkward pause. The consensus was that fast-forward works but the live-monster check fires too early.
+- **Decision:** Add a next-frame delay of about half a second to test the theory.
+- **Related issues:**
+  - Fast matching can still hit already-dead zombies despite larger projectiles.
+  - Nuke counts are unchanged.
+  - A drastic fix was floated: firing from just outside the frame.
+- **Discrepancy:** The delay is described as 0.5s, 1s and "next frame" in different places.
+
+## 2. Enrage visuals (Marcus Bennett)
+- **Feedback:** The effect looks like fire and conflicts with the existing burn effect. The reference was Dragon Ball Z.
+- **Direction:** Dial it down and shift toward an "aura" look, reddish-white was mentioned. The opening rays and glow were liked, and the sustained fire was not.
+- **Marcus's points:**
+  - The fire is there from the start but is hidden by the rays.
+  - A ground-only effect would be busy with many enraged zombies.
+  - He avoided lightning because a lighting effect already exists.
+- **Status:** The effect is ready to implement with no coding. He will share videos in two colors. An engineer plans to implement it on endless mode.
+
+## 3. Backgrounds
+- The cave background is done and its implementation issues are fixed.
+- **Decision:** No looping, because the backgrounds have built-in milestones: boat means far, surf means closer, sign means about to kill you.
+- 3D objects had no status because the owner was absent.
+
+## 4. Win/collect objects and haptics
+- **Spawn problem:** Win and collect objects spawned in one spot, in the middle or on top of other objects.
+  - **Decision:** Mix them into the pile and spawn them like normal items. Calvin Price will fix this.
+- **Home-screen UI:** The icon and progress bar were missing. The Q manager was stuck on the previous day's build at the collect-and-win animation, which also blocked tutorials and the daily pop-up. A PR from Calvin that restores the VFX and icon is awaiting merge.
+- **Haptics:** Bottles, trampoline and glue give no haptic feedback.
+  - **Decision:** They should behave like normal objects, with no fancy rocket-style haptics. Calvin will look.
+
+## 5. Pack opening and red dot
+- **Pack opening:** After the animation there is a window of about 1s to click other buttons.
+  - **Decision:** Redirect players straight to the current event (Zombie Lane or season pass). Calvin will do this.
+- **Red dot:** It is in a PR. It should also indicate an available empty slot, not just upgrades.
+
+## 6. Progression: win streak and tier scaling
+- **Win streak (Oliver Brooks):**
+  - Items aren't removed before the win streak unlocks.
+  - On unlock, the player's actual current streak is counted.
+- **Tier scaling:**
+  - The fix is likely a less-than versus less-than-or-equal bug.
+  - A user can update the app and continue from where they left off.
+  - The tier-up stuck at level 5 has no ticket yet.
+- **Season pass:** Rewards for bonus bank are an easy fix with no ticket.
+
+## 7. UI polish
+- **Store particles:** Blurry hazy balls float above the HUD and reward screen.
+  - **Decision:** Remove them (Samuel Turner), citing distraction and low-end devices.
+- **Quest rewards:** The four top chests turn semi-transparent and blink when claiming. They were made semi-transparent to block tab switching during claims.
+  - **Decision:** Remove the transparency (Calvin).
+  - The quest bar doesn't match the rest of the UI. A low-priority ticket will go to Calvin.
+- **Trophy path icons:** The gem and coin icons look low-res while the Zombie Lane pack art is sharp. They are stretched single icons.
+  - **Suggestion:** Use small piles of gems and coins, as in the shop.
+  - **Owner:** Oliver will have a ticket and investigate. The PM is also listed as creating a ticket.
+
+## 8. Stability and deferred items
+- **Disco-mode flicker:**
+  - It was seen on an iPhone 11 after about 30 back-to-back levels. It flickers after returning home from a level, and killing the app fixes it.
+  - There are no crash diagnostics, and it isn't reproducible.
+  - Theories were two cameras rendering to one display, a memory issue, or a dying GPU.
+  - **Decision:** Keep an eye on it.
+- **Fixed but awaiting PR merge:** The season pass and tutorial blockers, quitting a level mid-tornado, and orphan items in the boss arena. They stay in validation until the PRs are merged.
+- **Deferred past beta:** New animations and the CPU-to-GPU switch test, as too risky.
+- **Open items:**
+  - The Samsung device sound issue, with no device to test.
+  - Bot parameters look fine, but debugging waits on Google sign-in.
+  - The Addressables build is close and would need a proper loading screen.
+  - New levels are on the level designer's local bridge and will be pushed to main.
+  - A customer support button on the splash/login screen was requested because users get logged out. A ticket was created, and it is probably post-beta.
+  - Economy items go to the design meeting.
+
+## 9. Marketing and economy
+- **Plan:** Start with AppLovin. If results are good, blend in AdJO for strong D1/D7 to show investors. If AppLovin fails, skip AdJO.
+- **Rep feedback:** There was no IPM. You can't target by publisher. Results depend on genre and game. The rep mentioned about $500/day with no minimum.
+- **Concerns:**
+  - Zero delivery, as happened with Domino Delights.
+  - What CPM campaigns optimize toward, likely low-quality installs.
+- **Questions to ask:**
+  - What can be optimized downstream.
+  - Waterfall-placement levers. The first four slots cost about 2x, so consider the 3rd to 6th.
+  - Reach caps, about 2 ads per user.
+- **Creative:** Ads should look like horde-survival or Cup Heroes style.
+- **ROAS:** Day-7 ROAS campaigns aren't feasible because the economy is unoptimized. The team aims to fix this, starting the same day. Retention campaigns are possible with proper setup and monitoring.
+
+## Action items from the doc
+| Owner | Item |
+|---|---|
+| Team | Half-second win-screen delay |
+| Calvin Price | Mix collect/win objects into the pile; add haptics; redirect after pack animation; fix quest transparency; quest bar ticket |
+| Marcus Bennett | Tone down the enrage effect |
+| Engineer | Implement Marcus's VFX on endless mode |
+| Samuel Turner | Remove store particles |
+| Oliver Brooks | Ticket and investigation for low-res trophy icons |
+| PM | Ticket for the bug Oliver investigates |
+| Level designer | Push new levels to main |
